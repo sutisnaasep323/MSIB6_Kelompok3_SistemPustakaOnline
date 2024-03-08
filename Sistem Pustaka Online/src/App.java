@@ -1,4 +1,6 @@
-public class Buku {
+//BukuFiksi dan NonFiksi
+
+class Buku {
     private String judul;
     private String penulis;
     private int tahunTerbit;

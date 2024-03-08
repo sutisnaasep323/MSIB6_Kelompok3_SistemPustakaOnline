@@ -107,4 +107,5 @@ class Main {
         System.out.println("\nInformasi Buku Non Fiksi 2:");
         bukuNonFiksi2.tampilkanInfo();
     }
-}
+} 
+    

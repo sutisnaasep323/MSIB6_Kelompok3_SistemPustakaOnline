@@ -1,4 +1,5 @@
 //BukuFiksi dan NonFiksi
+import java.util.*;
 
 class Buku {
     private String judul;
@@ -88,8 +89,75 @@ class BukuNonFiksi extends Buku {
     }
 }
 
-class Main {
+/* 
+F.	Interaksi dengan Pengguna:
+    1.	Buat program utama yang memungkinkan pengguna untuk menambahkan, menghapus, dan mencari buku dalam daftar.
+    2.	Tampilkan informasi buku sesuai jenisnya dengan menggunakan Polymorphism.
+*/
+
+public class PenjualanOnline{
+    boolean loop = true;
+
+    PenjualanOnline(){
+        runner();
+    }
+
+    String getInputUser () {
+        Scanner sc = new Scanner(System.in);
+        return sc.nextLine(); 
+    }
+
+    void showMenu(){
+        System.out.println("============= Pilihan Menu =============");
+        System.out.println("1. Tambah Buku");
+        System.out.println("2. Hapus Buku");
+        System.out.println("3. Cari Buku");
+        System.out.println("4. Exit");
+        System.out.print("Pilihan anda : ");
+    }
+
+    void conditions(String pilihan){
+        try{
+            if(pilihan.isEmpty()){
+                System.out.println("Mohon inputkan nomor menu!");
+            }else{
+                while(loop){
+                    showMenu();
+                    switch(pilihan) {
+                        case "1":
+                            System.out.println("============= Tambah Buku =============");
+                            break;
+                        case "2":
+                            System.out.println("============= Hapus Buku =============");
+                            break;
+                        case "3":
+                            System.out.println("============= Cari Buku =============");
+                            break;
+                        case "4":
+                            loop = false;
+                            System.out.println("Terimakasih....");        
+                            break;
+                        default:
+                            System.err.println("Tidak ada menu dalam pilihan anda!");
+                    }
+                }
+            }
+        }catch (Exception e){
+            System.err.print("Mohon maaf ada kegagalan pada program, kami akan segera meneyelesaikan.");
+        }
+    }
+
+    void runner(){
+        showMenu();
+        String pilihanUser = getInputUser();
+        conditions(pilihanUser);
+    }
+
+}
+
+public class Main {
     public static void main(String[] args) {
+        // new PenjualanOnline();
         BukuFiksi bukuFiksi1 = new BukuFiksi("Buku Fiksi 1", "Penulis Fiksi 1", 2018, "Genre Fiksi 1");
         BukuFiksi bukuFiksi2 = new BukuFiksi("Buku Fiksi 2", "Penulis Fiksi 2", 2019, "Genre Fiksi 2");
         BukuNonFiksi bukuNonFiksi1 = new BukuNonFiksi("Buku Non Fiksi 1", "Penulis Non Fiksi 1", 2020, "Kategori Non Fiksi 1");

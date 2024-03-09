@@ -92,7 +92,7 @@ class PenjualanOnline {
     boolean loop = true;
     ArrayList<Buku> daftarBuku = new ArrayList<>();
 
-    PenjualanOnline() {
+    PenjualanOnline() {      
         runner();
     }
 
@@ -141,13 +141,16 @@ class PenjualanOnline {
         System.out.print("Judul Buku yang akan dihapus: ");
         String judulHapus = getInputUser();
 
-        for (Buku buku : daftarBuku) {
+        Iterator<Buku> iterator = daftarBuku.iterator();
+        while (iterator.hasNext()) {
+            Buku buku = iterator.next();
             if (buku.getJudul().equalsIgnoreCase(judulHapus)) {
-                daftarBuku.remove(buku);
+                iterator.remove();
                 System.out.println("Buku dengan judul '" + judulHapus + "' berhasil dihapus.");
                 return;
             }
         }
+        
         System.out.println("Buku dengan judul '" + judulHapus + "' tidak ditemukan.");
     }
 
@@ -168,29 +171,22 @@ class PenjualanOnline {
 
     void conditions(String pilihan) {
         try {
-            if (pilihan.isEmpty()) {
-                System.out.println("Mohon inputkan nomor menu!");
-            } else {
-                while (loop) {
-                    showMenu();
-                    switch (pilihan) {
-                        case "1":
-                            tambahBuku();
-                            break;
-                        case "2":
-                            hapusBuku();
-                            break;
-                        case "3":
-                            cariBuku();
-                            break;
-                        case "4":
-                            loop = false;
-                            System.out.println("Terimakasih....");
-                            break;
-                        default:
-                            System.err.println("Tidak ada menu dalam pilihan anda!");
-                    }
-                }
+            switch (pilihan) {
+                case "1":
+                    tambahBuku();
+                    break;
+                case "2":
+                    hapusBuku();
+                    break;
+                case "3":
+                    cariBuku();
+                    break;
+                case "4":
+                    loop = false;
+                    System.out.println("Terimakasih....");
+                    break;
+                default:
+                    System.err.println("Tidak ada menu dalam pilihan anda!");
             }
         } catch (Exception e) {
             System.err.print("Mohon maaf ada kegagalan pada program, kami akan segera menyelesaikan.");
@@ -198,9 +194,16 @@ class PenjualanOnline {
     }
 
     void runner() {
-        showMenu();
-        String pilihanUser = getInputUser();
-        conditions(pilihanUser);
+        String pilihanUser;
+        try {
+            do {
+                showMenu();
+                pilihanUser = getInputUser();
+                conditions(pilihanUser);
+            } while (loop);
+        } catch (Exception e) {
+            System.err.print("Mohon maaf ada kegagalan pada program, kami akan segera menyelesaikan.");
+        }
     }
 }
 

@@ -118,7 +118,7 @@ class PenjualanOnline {
         String penulis = getInputUser();
         System.out.print("Tahun Terbit: ");
         int tahunTerbit = Integer.parseInt(getInputUser());
-        System.out.print("Jenis Buku (Fiksi/NonFiksi): ");
+        System.out.print("Jenis Buku (Fiksi / NonFiksi): ");
         String jenisBuku = getInputUser();
 
         if (jenisBuku.equalsIgnoreCase("Fiksi")) {
@@ -126,12 +126,15 @@ class PenjualanOnline {
             String genre = getInputUser();
             BukuFiksi bukuFiksi = new BukuFiksi(judul, penulis, tahunTerbit, genre);
             daftarBuku.add(bukuFiksi);
-        } else if (jenisBuku.equalsIgnoreCase("NonFiksi")) {
+            System.out.println("Berhasil menambah buku Fiksi");
+        } else if (jenisBuku.equalsIgnoreCase("NonFiksi\n")) {
             System.out.print("Kategori: ");
             String kategori = getInputUser();
             BukuNonFiksi bukuNonFiksi = new BukuNonFiksi(judul, penulis, tahunTerbit, kategori);
             daftarBuku.add(bukuNonFiksi);
+            System.out.println("Berhasil menambah buku Non Fiksi\n");
         } else {
+            loop = false;
             System.out.println("Jenis buku tidak valid.");
         }
     }
@@ -168,6 +171,7 @@ class PenjualanOnline {
         }
         System.out.println("Buku dengan judul '" + judulCari + "' tidak ditemukan.");
     }
+
 
     void conditions(String pilihan) {
         try {

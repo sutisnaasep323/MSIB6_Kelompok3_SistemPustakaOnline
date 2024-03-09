@@ -1,4 +1,3 @@
-//BukuFiksi dan NonFiksi
 import java.util.*;
 
 class Buku {
@@ -89,25 +88,20 @@ class BukuNonFiksi extends Buku {
     }
 }
 
-/* 
-F.	Interaksi dengan Pengguna:
-    1.	Buat program utama yang memungkinkan pengguna untuk menambahkan, menghapus, dan mencari buku dalam daftar.
-    2.	Tampilkan informasi buku sesuai jenisnya dengan menggunakan Polymorphism.
-*/
-
-public class PenjualanOnline{
+class PenjualanOnline {
     boolean loop = true;
+    ArrayList<Buku> daftarBuku = new ArrayList<>();
 
-    PenjualanOnline(){
+    PenjualanOnline() {
         runner();
     }
 
-    String getInputUser () {
+    String getInputUser() {
         Scanner sc = new Scanner(System.in);
-        return sc.nextLine(); 
+        return sc.nextLine();
     }
 
-    void showMenu(){
+    void showMenu() {
         System.out.println("============= Pilihan Menu =============");
         System.out.println("1. Tambah Buku");
         System.out.println("2. Hapus Buku");
@@ -116,64 +110,102 @@ public class PenjualanOnline{
         System.out.print("Pilihan anda : ");
     }
 
-    void conditions(String pilihan){
-        try{
-            if(pilihan.isEmpty()){
+    void tambahBuku() {
+        System.out.println("============= Tambah Buku =============");
+        System.out.print("Judul: ");
+        String judul = getInputUser();
+        System.out.print("Penulis: ");
+        String penulis = getInputUser();
+        System.out.print("Tahun Terbit: ");
+        int tahunTerbit = Integer.parseInt(getInputUser());
+        System.out.print("Jenis Buku (Fiksi/NonFiksi): ");
+        String jenisBuku = getInputUser();
+
+        if (jenisBuku.equalsIgnoreCase("Fiksi")) {
+            System.out.print("Genre: ");
+            String genre = getInputUser();
+            BukuFiksi bukuFiksi = new BukuFiksi(judul, penulis, tahunTerbit, genre);
+            daftarBuku.add(bukuFiksi);
+        } else if (jenisBuku.equalsIgnoreCase("NonFiksi")) {
+            System.out.print("Kategori: ");
+            String kategori = getInputUser();
+            BukuNonFiksi bukuNonFiksi = new BukuNonFiksi(judul, penulis, tahunTerbit, kategori);
+            daftarBuku.add(bukuNonFiksi);
+        } else {
+            System.out.println("Jenis buku tidak valid.");
+        }
+    }
+
+    void hapusBuku() {
+        System.out.println("============= Hapus Buku =============");
+        System.out.print("Judul Buku yang akan dihapus: ");
+        String judulHapus = getInputUser();
+
+        for (Buku buku : daftarBuku) {
+            if (buku.getJudul().equalsIgnoreCase(judulHapus)) {
+                daftarBuku.remove(buku);
+                System.out.println("Buku dengan judul '" + judulHapus + "' berhasil dihapus.");
+                return;
+            }
+        }
+        System.out.println("Buku dengan judul '" + judulHapus + "' tidak ditemukan.");
+    }
+
+    void cariBuku() {
+        System.out.println("============= Cari Buku =============");
+        System.out.print("Judul Buku yang akan dicari: ");
+        String judulCari = getInputUser();
+
+        for (Buku buku : daftarBuku) {
+            if (buku.getJudul().equalsIgnoreCase(judulCari)) {
+                System.out.println("Informasi Buku:");
+                buku.tampilkanInfo();
+                return;
+            }
+        }
+        System.out.println("Buku dengan judul '" + judulCari + "' tidak ditemukan.");
+    }
+
+    void conditions(String pilihan) {
+        try {
+            if (pilihan.isEmpty()) {
                 System.out.println("Mohon inputkan nomor menu!");
-            }else{
-                while(loop){
+            } else {
+                while (loop) {
                     showMenu();
-                    switch(pilihan) {
+                    switch (pilihan) {
                         case "1":
-                            System.out.println("============= Tambah Buku =============");
+                            tambahBuku();
                             break;
                         case "2":
-                            System.out.println("============= Hapus Buku =============");
+                            hapusBuku();
                             break;
                         case "3":
-                            System.out.println("============= Cari Buku =============");
+                            cariBuku();
                             break;
                         case "4":
                             loop = false;
-                            System.out.println("Terimakasih....");        
+                            System.out.println("Terimakasih....");
                             break;
                         default:
                             System.err.println("Tidak ada menu dalam pilihan anda!");
                     }
                 }
             }
-        }catch (Exception e){
-            System.err.print("Mohon maaf ada kegagalan pada program, kami akan segera meneyelesaikan.");
+        } catch (Exception e) {
+            System.err.print("Mohon maaf ada kegagalan pada program, kami akan segera menyelesaikan.");
         }
     }
 
-    void runner(){
+    void runner() {
         showMenu();
         String pilihanUser = getInputUser();
         conditions(pilihanUser);
     }
-
 }
 
-public class Main {
+class Main {
     public static void main(String[] args) {
-        // new PenjualanOnline();
-        BukuFiksi bukuFiksi1 = new BukuFiksi("Buku Fiksi 1", "Penulis Fiksi 1", 2018, "Genre Fiksi 1");
-        BukuFiksi bukuFiksi2 = new BukuFiksi("Buku Fiksi 2", "Penulis Fiksi 2", 2019, "Genre Fiksi 2");
-        BukuNonFiksi bukuNonFiksi1 = new BukuNonFiksi("Buku Non Fiksi 1", "Penulis Non Fiksi 1", 2020, "Kategori Non Fiksi 1");
-        BukuNonFiksi bukuNonFiksi2 = new BukuNonFiksi("Buku Non Fiksi 2", "Penulis Non Fiksi 2", 2021, "Kategori Non Fiksi 2");
-
-        System.out.println("Informasi Buku Fiksi 1:");
-        bukuFiksi1.tampilkanInfo();
-
-        System.out.println("\nInformasi Buku Fiksi 2:");
-        bukuFiksi2.tampilkanInfo();
-
-        System.out.println("\nInformasi Buku Non Fiksi 1:");
-        bukuNonFiksi1.tampilkanInfo();
-
-        System.out.println("\nInformasi Buku Non Fiksi 2:");
-        bukuNonFiksi2.tampilkanInfo();
+        new PenjualanOnline();
     }
-} 
-    
+}
